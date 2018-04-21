@@ -255,6 +255,7 @@ function pad(val) {
 function startLap() {
   startTime = Date.now();
   setInterval(setTime, 1000);
+  raceStarted = true;
 
   const ref = firebase.database().ref('laps').push()
 
