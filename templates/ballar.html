@@ -217,7 +217,7 @@ function pushWaypoint() {
   console.log("status pose", scene.showPoseStatus)
 
   if (!frameData) {
-    frameData = new VRFrameData();
+    var frameData = new VRFrameData();
   }
   vrDisplay.getFrameData(frameData);
   console.log(frameData.pose.position);
