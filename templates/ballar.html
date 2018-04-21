@@ -216,18 +216,17 @@ function pointsCallback(trackSnapshot) {
     // Arrow
     posList = track.values();
     for (let i = 0; i < posList.length; i++) {
-        let dir = new THREE.Vector3(posList[i+1]);
+      let dir = new THREE.Vector3(posList[i+1]);
 
-        //normalize the direction vector (convert to vector of length 1)
-        dir.normalize();
+      //normalize the direction vector (convert to vector of length 1)
+      dir.normalize();
 
-        let origin = new THREE.Vector3(posList[i]);
-        let length = 1;
-        let hex = 0xffff00;
+      let origin = new THREE.Vector3(posList[i]);
+      let length = 1;
+      let hex = 0xffff00;
 
-        let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
-        scene.add(arrowHelper);
-      }
+      let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
+      scene.add(arrowHelper);
     }
   }
 }
