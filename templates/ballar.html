@@ -233,13 +233,10 @@ function onWindowResize () {
 }
 
 function update_matrix(hit, x, y, z) {
-    console.log(hit)
-    newHit = JSON.parse(JSON.stringify(hit));
-    console.log(newHit)
-    newHit.modelMatrix[12] += x;
-    newHit.modelMatrix[13] += y;
-    newHit.modelMatrix[14] += z;
-    return newHit;
+    hit.modelMatrix[12] += x;
+    hit.modelMatrix[13] += y;
+    hit.modelMatrix[14] += z;
+    return hit;
 }
 
 /**
