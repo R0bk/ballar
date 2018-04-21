@@ -215,17 +215,12 @@ function trackCallback(trackSnapshot) {
     // Arrow
     posList = Object.values(track);
     for (let i = 0; i < posList.length; i++) {
-      console.log(...posList[(i+1) % posList.length])
-      console.log(...posList[i])
-      let dir = new THREE.Vector3(...posList[(i+1) % posList.length]);
-
-      //normalize the direction vector (convert to vector of length 1)
-      dir.normalize();
-
-      let origin = new THREE.Vector3(...posList[i]);
-      let length = 3;
+      let from = new THREE.Vector3(...posList[i]);
+      let to = new THREE.Vector3(...posList[(i+1) % posList.length]);
+      let length = from.distanceTo(to);
       let hex = 0xffff00;
-
+      var dir = new THREE.Vector3();
+      dir.subVectors(to,from).normalize();
       let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
       arrows.push(arrowHelper);
       scene.add(arrowHelper);
