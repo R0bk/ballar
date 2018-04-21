@@ -145,6 +145,15 @@ function sidebar() {
     ;
 }
 
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 function init() {
   console.log('heyoo mate')
   // Turn on the debugging panel
@@ -245,7 +254,7 @@ function trackCallback(trackSnapshot) {
       let from = new THREE.Vector3(...posList[i]);
       let to = new THREE.Vector3(...posList[(i+1) % posList.length]);
       let length = from.distanceTo(to);
-      let hex = 0xffff00;
+      let hex = getRandomColor();
       var dir = new THREE.Vector3();
       dir.subVectors(to,from).normalize();
       let arrowHelper = new THREE.ArrowHelper(dir, from, length, hex);
