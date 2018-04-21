@@ -84,6 +84,7 @@ var scene;
 var renderer;
 var cube;
 var balls = [];
+var arrows = [];
 var BALL_SETTINGS = {
   'size': 0.05,
   'heightSegments': 4,
@@ -168,8 +169,8 @@ function init() {
     balls.push(sphere);
   }
 
-  let dir = new THREE.Vector3([0, 0, 0]);
-  let origin = new THREE.Vector3([1, 1, 1]);
+  let dir = new THREE.Vector3([1, 1, 1]);
+  let origin = new THREE.Vector3([0, 0, 0]);
   scene.add(new THREE.ArrowHelper(dir, origin, 1, 0xffff00));
 
   //hemisphere light
@@ -233,6 +234,7 @@ function trackCallback(trackSnapshot) {
       let hex = 0xffff00;
 
       let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
+      arrows.push(arrowHelper);
       scene.add(arrowHelper);
     }
     update();
