@@ -196,7 +196,7 @@ function init() {
 
   firebase.database().ref('tracks').child(trackUid).once('value', trackCallback);
   // Kick off the render loop!
-  //update();
+  update();
 }
 
 firebase.database().ref('signOn').push()
@@ -245,7 +245,7 @@ function trackCallback(trackSnapshot) {
       arrows.push(arrowHelper);
       scene.add(arrowHelper);
     }
-    update();
+    // update();
   }
 }
 
