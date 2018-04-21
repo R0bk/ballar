@@ -213,6 +213,7 @@ function pushWaypoint() {
   }
 
   console.log("trackUid", trackUid)
+  console.log("status pose", scene.showPoseStatus)
 
   firebase.database().ref('tracks').child(trackUid).push(scene.showPoseStatus)
 }
