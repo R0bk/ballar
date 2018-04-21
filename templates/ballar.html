@@ -293,7 +293,7 @@ function setTime() {
   document.getElementById("minutes").innerHTML = pad(parseInt(totalSeconds / 60));
 }
 
-firebase().database().ref('laps').on('value', setLeaderboard)
+firebase.database().ref('laps').on('value', setLeaderboard)
 
 function setLeaderboard(lapsSnapshot) {
   if (lapsSnapshot) {
