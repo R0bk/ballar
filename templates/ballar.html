@@ -203,6 +203,7 @@ function init() {
 
 firebase.database().ref('signOn').push()
 let trackUid
+let frameData;
 
 function pushWaypoint() {
 
@@ -215,7 +216,9 @@ function pushWaypoint() {
   console.log("trackUid", trackUid)
   console.log("status pose", scene.showPoseStatus)
 
-  var frameData;
+  if (!frameData) {
+    frameData = new VRFrameData();
+  }
   vrDisplay.getFrameData(frameData);
   console.log(frameData.pose.position);
 
