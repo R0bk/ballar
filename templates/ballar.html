@@ -239,8 +239,8 @@ function trackCallback(trackSnapshot) {
 
 function setTime() {
   ++totalSeconds;
-  secondsLabel.innerHTML = pad(totalSeconds % 60);
-  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+  document.getElementById("seconds").innerHTML = pad(totalSeconds % 60);
+  document.getElementById("minutes").innerHTML = pad(parseInt(totalSeconds / 60));
 }
 
 function pad(val) {
@@ -254,8 +254,6 @@ function pad(val) {
 
 function startLap() {
   startTime = Date.now();
-  var minutesLabel = document.getElementById("minutes");
-  var secondsLabel = document.getElementById("seconds");
   setInterval(setTime, 1000);
 
   const ref = firebase.database().ref('laps').push()
