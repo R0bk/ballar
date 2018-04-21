@@ -160,19 +160,19 @@ function init() {
   //         [1.96, 2.07, -7.88],
   //           [-2.96, 2.04, -8.86]];
 
-  map = [[0, 0, 0],
-         [1, 2, 0],
-         [-2, -2, -2]];
+  // map = [[0, 0, 0],
+  //        [1, 2, 0],
+  //        [-2, -2, -2]];
 
-  for (let i = 0; i < map.length; i++) {
-    var from = new THREE.Vector3(...map[i]);
-    var to = new THREE.Vector3(...map[(i + 1) % map.length]);
-    var length = 10;
-    console.log(length);
-    var hex = 0xff00ff;
-    to.normalize();
-    scene.add(new THREE.ArrowHelper(to, from, length, hex));
-  }
+  // for (let i = 0; i < map.length; i++) {
+  //   var from = new THREE.Vector3(...map[i]);
+  //   var to = new THREE.Vector3(...map[(i + 1) % map.length]);
+  //   var length = 10;
+  //   console.log(length);
+  //   var hex = 0xff00ff;
+  //   to.normalize();
+  //   scene.add(new THREE.ArrowHelper(to, from, length, hex));
+  // }
 
   //hemisphere light
   //var hemisphereLight = new THREE.HemisphereLight(0xffffff,0xff0000,1);
@@ -187,7 +187,7 @@ function init() {
   window.addEventListener('resize', onWindowResize, false);
   // canvas.addEventListener('touchstart', onClick, false);
 
-  // firebase.database().ref('tracks').child(trackUid).once('value', trackCallback);
+  firebase.database().ref('tracks').child(trackUid).once('value', trackCallback);
   // Kick off the render loop!
   update();
 }
@@ -215,14 +215,14 @@ function trackCallback(trackSnapshot) {
     // Arrow
     posList = Object.values(track);
     for (let i = 0; i < posList.length; i++) {
-      console.log(posList[(i+1) % posList.length])
-      console.log(posList[i])
-      let dir = new THREE.Vector3(posList[(i+1) % posList.length]);
+      console.log(...posList[(i+1) % posList.length])
+      console.log(...posList[i])
+      let dir = new THREE.Vector3(...posList[(i+1) % posList.length]);
 
       //normalize the direction vector (convert to vector of length 1)
       dir.normalize();
 
-      let origin = new THREE.Vector3(posList[i]);
+      let origin = new THREE.Vector3(...posList[i]);
       let length = 3;
       let hex = 0xffff00;
 
