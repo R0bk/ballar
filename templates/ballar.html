@@ -214,8 +214,15 @@ function pushWaypoint() {
   }
 
   console.log("trackUid", trackUid)
+  console.log("status pose", scene.showPoseStatus)
 
-  firebase.database().ref('tracks').child(trackUid).push(scene.showPoseStatus)
+  if (!frameData) {
+    frameData = new VRFrameData();
+  }
+  vrDisplay.getFrameData(frameData);
+  console.log(frameData.pose.position);
+
+  firebase.database().ref('tracks').child(trackUid).push().set(frameData.pose.position)
 }
 
 function pointsCallback(trackSnapshot) {
