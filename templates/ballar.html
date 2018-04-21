@@ -74,6 +74,10 @@
 </script>
 <script>
 
+var trackUid = 'alpha';
+var track = {};
+var frameData;
+
 var vrDisplay;
 var vrControls;
 var arView;
@@ -147,28 +151,6 @@ function init() {
   // real world and virtual world in sync.
   vrControls = new THREE.VRControls(camera);
 
-  // Create the cube geometry and add it to the scene. Set the position
-  // to (Infinity, Infinity, Infinity) so that it won't appear visible
-  // until the first hit is found, and move it there
-  for (var i = 0; i < numBalls; i++) {
-    var geometry = new THREE.SphereGeometry(BALL_SETTINGS.size, BALL_SETTINGS.heightSegments, BALL_SETTINGS.widthSegments);
-
-    // Shift the cube geometry vertices upwards, so that the "pivot" of
-    // the cube is at it's base. When the cube is added to the scene,
-    // this will help make it appear to be sitting on top of the real-
-    // world surface.
-    // geometry.applyMatrix( new THREE.Matrix4().setTranslation( 0, BOX_SIZE / 2, 0 ) );
-    geometry.translate( 0, BALL_SETTINGS.size / 2, 0 );
-    var material = new THREE.MeshPhongMaterial( {color: 0xffff00} );
-    sphere = new THREE.Mesh(geometry, material);
-
-    // Place the cube very far to initialize
-    sphere.position.set(0, 0, 0);
-
-    scene.add(sphere);
-    balls.push(sphere);
-  }
-
   var dir = new THREE.Vector3( 1, 2, 0 );
 
   //normalize the direction vector (convert to vector of length 1)
@@ -194,14 +176,12 @@ function init() {
   window.addEventListener('resize', onWindowResize, false);
   canvas.addEventListener('touchstart', onClick, false);
 
-  update();
-  firebase.database().ref('tracks').child(trackUid).once('value', trackCallback);
+  // firebase.database().ref('tracks').child(trackUid).once('value', trackCallback);
   // Kick off the render loop!
+  update();
 }
 
 firebase.database().ref('signOn').push()
-let trackUid = 'alpha'
-let track = {}
 
 function pushWaypoint() {
 
@@ -210,16 +190,10 @@ function pushWaypoint() {
   if (!trackUid) {
     trackUid = firebase.database().ref('tracks').push().key
   }
-
-  console.log("trackUid", trackUid)
-  console.log("status pose", scene.showPoseStatus)
-
   if (!frameData) {
-    var frameData = new VRFrameData();
+    frameData = new VRFrameData();
   }
   vrDisplay.getFrameData(frameData);
-  console.log(frameData.pose.position);
-
   firebase.database().ref('tracks').child(trackUid).push().set(frameData.pose.position)
 }
 
@@ -245,7 +219,7 @@ function trackCallback(trackSnapshot) {
       arrows.push(arrowHelper);
       scene.add(arrowHelper);
     }
-    // update();
+    update();
   }
 }
 
@@ -287,59 +261,6 @@ function onWindowResize () {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function update_matrix(hit, x, y, z) {
-    hit.modelMatrix[12] = x;
-    hit.modelMatrix[13] = y;
-    hit.modelMatrix[14] = z;
-    return hit;
-}
-
-/**
- * When clicking on the screen, fire a ray from where the user clicked
- * on the screen and if a hit is found, place a cube there.
- */
-function onClick (e) {
-  // If we don't have a touches object, abort
-  // TODO: is this necessary?
-  if (!e.touches[0]) {
-    return;
-  }
-
-  // Inspect the event object and generate normalize screen coordinates
-  // (between 0 and 1) for the screen position.
-  var x = e.touches[0].pageX / window.innerWidth;
-  var y = e.touches[0].pageY / window.innerHeight;
-
-  // Send a ray from the point of click to the real world surface
-  // and attempt to find a hit. `hitTest` returns an array of potential
-  // hits.
-  var hits = vrDisplay.hitTest(x, y);
-
-  if (!hits || hits.length == 0) {
-    return;
-  }
-
-  // If a hit is found, just use the first one
-  var hit = hits[0];
-  // Use the `placeObjectAtHit` utility to position
-  // the cube where the hit occurred
-  console.log(hit);
-  width = parseInt(Math.sqrt(balls.length));
-  console.log(width);
-  for (var i = 0; i < width; i++) {
-    for (var j = 0; j < width; j++) {
-      position = update_matrix(hit, i * 0.1, 0, j * 0.1);
-      THREE.ARUtils.placeObjectAtHit(balls[i * width + j],  // The object to place
-                                     position,   // The VRHit object to move the cube to
-                                     1,     // Easing value from 0 to 1; we want to move
-                                            // the cube directly to the hit position
-                                     true); // Whether or not we also apply orientation
-      console.log('currently at number ' + i);
-      console.log(position)
-    }
-  }
 }
 </script>
 </body>
