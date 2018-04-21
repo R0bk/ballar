@@ -299,8 +299,6 @@ function setLeaderboard(lapsSnapshot) {
 
     const laps = Object.values(lapsSnapshot.val())
 
-    console.log(laps)
-
     let times = laps.map(x => {
       if (x.finish && x.start) {
         return (x.finish - x.start) / 1000
@@ -309,9 +307,9 @@ function setLeaderboard(lapsSnapshot) {
       }
     })
     
-    console.log(times)
-
     times = times.sort()
+
+    console.log('times', times)
 
     document.getElementById("first").innerHTML = "Max: " + times[0]
     document.getElementById("second").innerHTML = "Max: " + times[1]
