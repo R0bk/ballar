@@ -49,13 +49,13 @@
 </head>
   <body>
     <div class="ui sidebar inverted vertical menu">
-      <a class="item">
+      <a class="item" id="first">
         1
       </a>
-      <a class="item">
+      <a class="item" id="second">
         2
       </a>
-      <a class="item">
+      <a class="item" id="third">
         3
       </a>
     </div>
@@ -267,6 +267,30 @@ function setTime() {
   ++totalSeconds;
   document.getElementById("seconds").innerHTML = pad(totalSeconds % 60);
   document.getElementById("minutes").innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+firebase().database().ref('laps').on('value', setLeaderboard)
+
+function setLeaderboard(lapsSnapshot) {
+  if (lapsSnapshot) {
+
+    const laps = Object.values(lapsSnapshot.val())
+
+    const times = laps.map(x => {
+      if (x.finish && x.start) {
+        return (x.finish - x.start) / 1000
+      } else {
+        return 9999999
+      }
+    })
+
+    times.sort()
+
+    document.getElementById("first").innerHTML = times[0]
+    document.getElementById("second").innerHTML = times[1]
+    document.getElementById("third").innerHTML = times[2]
+
+  }
 }
 
 function pad(val) {
