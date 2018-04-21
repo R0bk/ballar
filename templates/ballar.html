@@ -273,7 +273,7 @@ function onClick (e) {
   console.log('just hit son');
   console.log(balls.length);
   for (var i = balls.length - 1; i >= 0; i--) {
-    position = update_matrix(hit, i + 0.1, i + 0.1, 0);
+    position = update_matrix(hit, i*0.1, i*0.1, 0);
     console.log('currently at number ' + i);
     console.log(position)
     THREE.ARUtils.placeObjectAtHit(balls[i],  // The object to place
