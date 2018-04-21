@@ -181,6 +181,7 @@ function init() {
   window.addEventListener('resize', onWindowResize, false);
   canvas.addEventListener('touchstart', onClick, false);
 
+  firebase.database().ref('tracks').child(trackUid).once('value', trackCallback);
   // Kick off the render loop!
   update();
 }
@@ -229,12 +230,10 @@ function trackCallback(trackSnapshot) {
 
       let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
       scene.add(arrowHelper);
-      update();
     }
   }
 }
 
-firebase.database().ref('tracks').child(trackUid).on('value', trackCallback)
 
 /**
  * The render loop, called once per frame. Handles updating
