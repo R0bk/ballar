@@ -260,22 +260,25 @@ function onClick (e) {
   // hits.
   var hits = vrDisplay.hitTest(x, y);
 
-  // If a hit is found, just use the first one
-  if (hits && hits.length) {
-    var hit = hits[0];
-    console.log('rob sux');
-    // Use the `placeObjectAtHit` utility to position
-    // the cube where the hit occurred
-    console.log(hit)
-    console.log('just hit son')
-    for (var i = balls.length - 1; i >= 0; i--) {
-      THREE.ARUtils.placeObjectAtHit(balls[i],  // The object to place
-                                     update_matrix(hit, i + 10, i + 10, 0),   // The VRHit object to move the cube to
-                                     1,     // Easing value from 0 to 1; we want to move
-                                            // the cube directly to the hit position
-                                     true); // Whether or not we also apply orientation
-    }
+  if (!hits || hits.length == 0) {
+    return;
+  }
 
+  // If a hit is found, just use the first one
+  var hit = hits[0];
+  console.log('rob sux');
+  // Use the `placeObjectAtHit` utility to position
+  // the cube where the hit occurred
+  console.log(hit)
+  console.log('just hit son');
+  console.log(balls.length);
+  for (var i = balls.length - 1; i >= 0; i--) {
+    console.log('currently at number ' + i);
+    THREE.ARUtils.placeObjectAtHit(balls[i],  // The object to place
+                                   update_matrix(hit, i + 10, i + 10, 0),   // The VRHit object to move the cube to
+                                   1,     // Easing value from 0 to 1; we want to move
+                                          // the cube directly to the hit position
+                                   true); // Whether or not we also apply orientation
   }
 }
 </script>
