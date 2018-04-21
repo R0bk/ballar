@@ -99,6 +99,7 @@ var BALL_SETTINGS = {
 var startTime;
 var raceStarted = false;
 var numBalls = 0;
+var totalSeconds = 0;
 
 var BOX_SIZE = 0.2;
 
@@ -255,7 +256,6 @@ function startLap() {
   startTime = Date.now();
   var minutesLabel = document.getElementById("minutes");
   var secondsLabel = document.getElementById("seconds");
-  var totalSeconds = 0;
   setInterval(setTime, 1000);
 
   const ref = firebase.database().ref('laps').push()
@@ -279,7 +279,9 @@ function checkLapFinished() {
   vrDisplay.getFrameData(frameData);
   let currentPos = frameData.pose.position;
   let targetPos = Object.values(track)[Object.values(track).length - 1];
-  if ((currentPos[0]-targetPos[0] < 1 || targetPos[0]-targetPos[0] < 1) && (currentPos[1]-targetPos[1] < 1 || targetPos[1]-targetPos[1] < 1) && (currentPos[2]-targetPos[2] < 1 || targetPos[2]-targetPos[2] < 1)) {
+  if ((currentPos[0]-targetPos[0] < 1 || targetPos[0]-targetPos[0] < 1) &&
+    (currentPos[1]-targetPos[1] < 1 || targetPos[1]-targetPos[1] < 1) &&
+    (currentPos[2]-targetPos[2] < 1 || targetPos[2]-targetPos[2] < 1)) {
     console.log('finished lap')
     let finishedTime = Date.now();
 
