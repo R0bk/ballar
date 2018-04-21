@@ -58,8 +58,6 @@
 <script src="{{ url_for('static', filename='js/three.js/three.js') }}"></script>
 <script src="{{ url_for('static', filename='js/three.js/VRControls.js') }}"></script>
 <script src="{{ url_for('static', filename='js/three.ar.js') }}"></script>
-<!-- <script src="js/three.js/VRControls.js"></script>
-<script src="js/three.ar.js"></script> -->
 <script>
 
 var vrDisplay;
@@ -71,6 +69,14 @@ var camera;
 var scene;
 var renderer;
 var cube;
+var balls = [];
+var BALL_SETTINGS = {
+  'size': 0.05,
+  'heightSegments': 16,
+  'widthSegments': 16,
+}
+var numBalls = 10;
+
 
 var colors = [
   new THREE.Color( 0xffffff ),
@@ -140,28 +146,43 @@ function init() {
   // Create the cube geometry and add it to the scene. Set the position
   // to (Infinity, Infinity, Infinity) so that it won't appear visible
   // until the first hit is found, and move it there
-  var geometry = new THREE.BoxGeometry(BOX_SIZE, BOX_SIZE, BOX_SIZE);
-  var faceIndices = ['a', 'b', 'c'];
-  for (var i = 0; i < geometry.faces.length; i++) {
-    var f  = geometry.faces[i];
-    for (var j = 0; j < 3; j++) {
-      var vertexIndex = f[faceIndices[ j ]];
-      f.vertexColors[j] = colors[vertexIndex];
-    }
+  for (var i = 0; i < numBalls; i++) {
+    var geometry = new THREE.SphereGeometry(BALL_SETTINGS.size, BALL_SETTINGS.heightSegments, BALL_SETTINGS.widthSegments);
+    
+    //var faceIndices = ['a', 'b', 'c'];
+    //for (var i = 0; i < geometry.faces.length; i++) {
+    //  var f  = geometry.faces[i];
+    //  for (var j = 0; j < 3; j++) {
+    //    var vertexIndex = f[faceIndices[ j ]];
+    //    f.vertexColors[j] = colors[vertexIndex];
+    //  }
+    //}
+
+    // Shift the cube geometry vertices upwards, so that the "pivot" of
+    // the cube is at it's base. When the cube is added to the scene,
+    // this will help make it appear to be sitting on top of the real-
+    // world surface.
+    // geometry.applyMatrix( new THREE.Matrix4().setTranslation( 0, BOX_SIZE / 2, 0 ) );
+    geometry.translate( 0, BALL_SETTINGS.size / 2, 0 );
+    //var material = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors });
+    var material = new THREE.MeshPhongMaterial( {color: 0xffff00} );
+    sphere = new THREE.Mesh(geometry, material);
+
+    // Place the cube very far to initialize
+    sphere.position.set(10000, 10000, 10000);
+
+    scene.add(sphere);
+    balls.push(sphere);
   }
-  // Shift the cube geometry vertices upwards, so that the "pivot" of
-  // the cube is at it's base. When the cube is added to the scene,
-  // this will help make it appear to be sitting on top of the real-
-  // world surface.
-  // geometry.applyMatrix( new THREE.Matrix4().setTranslation( 0, BOX_SIZE / 2, 0 ) );
-  geometry.translate( 0, BOX_SIZE / 2, 0 );
-  var material = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors });
-  cube = new THREE.Mesh(geometry, material);
 
-  // Place the cube very far to initialize
-  cube.position.set(10000, 10000, 10000);
+  //hemisphere light
+  //var hemisphereLight = new THREE.HemisphereLight(0xffffff,0xff0000,1);
+  //hemisphereLight.position.set(1, 0, 1).normalize();
+  //scene.add(hemisphereLight);
 
-  scene.add(cube);
+  // White directional light at half intensity shining from the top.
+  var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+  scene.add( directionalLight );
 
   // Bind our event handlers
   window.addEventListener('resize', onWindowResize, false);
@@ -236,11 +257,13 @@ function onClick (e) {
     var hit = hits[0];
     // Use the `placeObjectAtHit` utility to position
     // the cube where the hit occurred
-    THREE.ARUtils.placeObjectAtHit(cube,  // The object to place
-                                   hit,   // The VRHit object to move the cube to
-                                   1,     // Easing value from 0 to 1; we want to move
-                                          // the cube directly to the hit position
-                                   true); // Whether or not we also apply orientation
+    for (var i = balls.length - 1; i >= 0; i--) {
+      THREE.ARUtils.placeObjectAtHit(balls[i],  // The object to place
+                                     [hit + i*0.1, hit + i*0.1, hit + i*0.1],   // The VRHit object to move the cube to
+                                     1,     // Easing value from 0 to 1; we want to move
+                                            // the cube directly to the hit position
+                                     true); // Whether or not we also apply orientation
+    }
 
   }
 }
