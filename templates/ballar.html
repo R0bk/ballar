@@ -64,6 +64,7 @@
         <span class="title">Tap to spawn objects on surfaces.</span>
         <br/>
         <span class="links">
+          <label id="minutes">00</label>:<label id="seconds">00</label>
           <a href="https://github.com/google-ar/three.ar.js">three.ar.js</a> -
           <a href="https://developers.google.com/ar/develop/web/getting-started#examples">examples</a>
           <button onClick="startLap()">Start Lap</button>
@@ -254,8 +255,27 @@ function trackCallback(trackSnapshot) {
   }
 }
 
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+
 function startLap() {
   startTime = Date.now();
+  var minutesLabel = document.getElementById("minutes");
+  var secondsLabel = document.getElementById("seconds");
+  var totalSeconds = 0;
+  setInterval(setTime, 1000);
 
   const ref = firebase.database().ref('laps').push()
 
