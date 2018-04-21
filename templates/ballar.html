@@ -69,13 +69,13 @@
 </head>
   <body>
     <div class="ui sidebar inverted vertical menu">
-      <a class="item">
+      <a class="item" id="first">
         1
       </a>
-      <a class="item">
+      <a class="item" id="second">
         2
       </a>
-      <a class="item">
+      <a class="item" id="third">
         3
       </a>
     </div>
@@ -293,6 +293,33 @@ function setTime() {
   document.getElementById("minutes").innerHTML = pad(parseInt(totalSeconds / 60));
 }
 
+firebase().database().ref('laps').on('value', setLeaderboard)
+
+function setLeaderboard(lapsSnapshot) {
+  if (lapsSnapshot) {
+
+    const laps = Object.values(lapsSnapshot.val())
+
+    console.log(laps)
+
+    const times = laps.map(x => {
+      if (x.finish && x.start) {
+        return (x.finish - x.start) / 1000
+      } else {
+        return 9999999
+      }
+    })
+    
+    console.log(times)
+
+    times.sort()
+
+    document.getElementById("first").innerHTML = times[0]
+    document.getElementById("second").innerHTML = times[1]
+    document.getElementById("third").innerHTML = times[2]
+  }
+}
+
 function pad(val) {
   var valString = val + "";
   if (valString.length < 2) {
@@ -329,7 +356,7 @@ function checkLapFinished() {
   let currentPos = frameData.pose.position;
   let targetPos = Object.values(track)[Object.values(track).length - 1];
   let from = THREE.Vector3.fromArray(currentPos);
-  let to = Three.Vector3.fromArray(targetPos);
+  let to = THREE.Vector3.fromArray(targetPos);
   let distance = from.distanceTo(to);
   console.log(distance);
   if (distance < 0.5) {
