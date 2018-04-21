@@ -177,22 +177,6 @@ function init() {
   var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
   scene.add( directionalLight );
 
-  // Arrow
-  let posList = []
-  for (let i = 0; i < posList.length; i++) {
-    let dir = new THREE.Vector3(pos[i+1]);
-
-    //normalize the direction vector (convert to vector of length 1)
-    dir.normalize();
-
-    let origin = new THREE.Vector3(pos[i]);
-    let length = 1;
-    let hex = 0xffff00;
-
-    let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
-    scene.add(arrowHelper);
-  }
-
   // Bind our event handlers
   window.addEventListener('resize', onWindowResize, false);
   canvas.addEventListener('touchstart', onClick, false);
@@ -229,6 +213,22 @@ function pointsCallback(trackSnapshot) {
   if (trackSnapshot) {
     track = trackSnapshot.val()
     console.log('new snapshot', track)
+    // Arrow
+    posList = track.values();
+    for (let i = 0; i < posList.length; i++) {
+        let dir = new THREE.Vector3(posList[i+1]);
+
+        //normalize the direction vector (convert to vector of length 1)
+        dir.normalize();
+
+        let origin = new THREE.Vector3(posList[i]);
+        let length = 1;
+        let hex = 0xffff00;
+
+        let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
+        scene.add(arrowHelper);
+      }
+    }
   }
 }
 
