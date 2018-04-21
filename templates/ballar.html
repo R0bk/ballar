@@ -53,6 +53,7 @@
   <span class="links">
     <a href="https://github.com/google-ar/three.ar.js">three.ar.js</a> -
     <a href="https://developers.google.com/ar/develop/web/getting-started#examples">examples</a>
+    <a onClick="pushWaypoint()">waypoint</a>
   </span>
 </div>
 <script src="{{ url_for('static', filename='js/three.js/three.js') }}"></script>
@@ -198,6 +199,17 @@ function init() {
 
   // Kick off the render loop!
   update();
+}
+
+let trackUid
+
+function pushWaypoint() {
+
+  if (!trackUid) {
+    trackUid = firebase.database().ref('tracks').push().key
+  }
+
+  firebase.database().ref('tracks').child(trackUid).push(scene.config.showPoseStatus)
 }
 
 /**
