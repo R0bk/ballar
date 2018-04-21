@@ -202,7 +202,8 @@ function init() {
 }
 
 firebase.database().ref('signOn').push()
-let trackUid
+let trackUid = 'alpha'
+let track = {}
 
 function pushWaypoint() {
 
@@ -216,6 +217,15 @@ function pushWaypoint() {
 
   firebase.database().ref('tracks').child(trackUid).push(scene.showPoseStatus)
 }
+
+function pointsCallback(trackSnapshot) {
+  if (trackSnapshot) {
+    track = trackSnapshot.val()
+    console.log('new snapshot', track)
+  }
+}
+
+firebase.database().ref('tracks').child(trackUid).on('value', trackCallback)
 
 /**
  * The render loop, called once per frame. Handles updating
