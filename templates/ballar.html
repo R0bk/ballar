@@ -183,7 +183,7 @@ function init() {
 
   firebase.database().ref('tracks').child(trackUid).once('value', trackCallback);
   // Kick off the render loop!
-  update();
+  //update();
 }
 
 firebase.database().ref('signOn').push()
@@ -230,6 +230,7 @@ function trackCallback(trackSnapshot) {
 
       let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
       scene.add(arrowHelper);
+      update();
     }
   }
 }
