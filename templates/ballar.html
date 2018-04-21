@@ -307,7 +307,9 @@ function checkLapFinished() {
   let targetPos = Object.values(track)[Object.values(track).length - 1];
   let from = THREE.Vector3.fromArray(currentPos);
   let to = Three.Vector3.fromArray(targetPos);
-  if (from.distanceTo(to) < 0.5) {
+  let distance = from.distanceTo(to);
+  console.log(distance);
+  if (distance < 0.5) {
     console.log('finished lap')
     let finishedTime = Date.now();
 
