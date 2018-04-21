@@ -163,6 +163,14 @@ function init() {
   var arrowHelper = new THREE.ArrowHelper( dir, origin, length, hex );
   scene.add( arrowHelper );
 
+  var dir2 = new THREE.Vector3( -2, -2, -2 );
+
+  //normalize the direction vector (convert to vector of length 1)
+  dir2.normalize();
+
+  var arrowHelper2 = new THREE.ArrowHelper( dir2, origin, 2, hex );
+  scene.add( arrowHelper2 );
+
   //hemisphere light
   //var hemisphereLight = new THREE.HemisphereLight(0xffffff,0xff0000,1);
   //hemisphereLight.position.set(1, 0, 1).normalize();
@@ -176,7 +184,7 @@ function init() {
   window.addEventListener('resize', onWindowResize, false);
   // canvas.addEventListener('touchstart', onClick, false);
 
-  firebase.database().ref('tracks').child(trackUid).once('value', trackCallback);
+  // firebase.database().ref('tracks').child(trackUid).once('value', trackCallback);
   // Kick off the render loop!
   update();
 }
