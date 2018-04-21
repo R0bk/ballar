@@ -294,6 +294,11 @@ function setTime() {
 
 firebase.database().ref('laps').on('value', setLeaderboard)
 
+
+function sortNumber(a, b) {
+  return a - b;
+}
+
 function setLeaderboard(lapsSnapshot) {
   if (lapsSnapshot) {
 
@@ -307,9 +312,7 @@ function setLeaderboard(lapsSnapshot) {
       }
     })
     
-    times = times.sort()
-
-    console.log('times', times)
+    times = times.sort(sortNumber)
 
     document.getElementById("first").innerHTML = "Max: " + times[0]
     document.getElementById("second").innerHTML = "Max: " + times[1]
