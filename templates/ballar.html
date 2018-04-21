@@ -232,11 +232,11 @@ function onWindowResize () {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-function update_matrix(modelMatrix, x, y, z) {
-    modelMatrix[12] += x
-    modelMatrix[13] += y
-    modelMatrix[14] += z
-    return modelMatrix
+function update_matrix(hit, x, y, z) {
+    hit.modelMatrix[12] += x
+    hit.modelMatrix[13] += y
+    hit.modelMatrix[14] += z
+    return hit
 }
 
 /**
