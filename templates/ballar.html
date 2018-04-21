@@ -75,7 +75,7 @@ var BALL_SETTINGS = {
   'heightSegments': 16,
   'widthSegments': 16,
 }
-var numBalls = 10;
+var numBalls = 1;
 
 
 var colors = [
@@ -107,6 +107,7 @@ THREE.ARUtils.getARDisplay().then(function (display) {
 });
 
 function init() {
+  console.log('heyoo mate')
   // Turn on the debugging panel
   var arDebug = new THREE.ARDebug(vrDisplay);
   document.body.appendChild(arDebug.getElement());
@@ -257,9 +258,11 @@ function onClick (e) {
     var hit = hits[0];
     // Use the `placeObjectAtHit` utility to position
     // the cube where the hit occurred
+    console.log(hit)
+    console.log('just hit son')
     for (var i = balls.length - 1; i >= 0; i--) {
       THREE.ARUtils.placeObjectAtHit(balls[i],  // The object to place
-                                     [hit + i*0.1, hit + i*0.1, hit + i*0.1],   // The VRHit object to move the cube to
+                                     hit,   // The VRHit object to move the cube to
                                      1,     // Easing value from 0 to 1; we want to move
                                             // the cube directly to the hit position
                                      true); // Whether or not we also apply orientation
