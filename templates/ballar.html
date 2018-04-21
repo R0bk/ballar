@@ -58,9 +58,20 @@
 <script src="{{ url_for('static', filename='js/three.js/three.js') }}"></script>
 <script src="{{ url_for('static', filename='js/three.js/VRControls.js') }}"></script>
 <script src="{{ url_for('static', filename='js/three.ar.js') }}"></script>
+<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
 <script>
-
-
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCYacS73Snab2b-gCTB-HpoGwt11xxb65c",
+    authDomain: "ballar-tanda.firebaseapp.com",
+    databaseURL: "https://ballar-tanda.firebaseio.com",
+    projectId: "ballar-tanda",
+    storageBucket: "",
+    messagingSenderId: "1089183303076"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
 
 var vrDisplay;
 var vrControls;
