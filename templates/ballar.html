@@ -165,7 +165,7 @@ function init() {
   for (let i = 0; i < map.length; i++) {
     var from = new THREE.Vector3(map[i]);
     var to = new THREE.Vector3(map[(i + 1) % map.length]);
-    var length = from.distanceTo(to);
+    var length = 10;
     console.log(length);
     var hex = 0xff00ff;
     to.normalize();
