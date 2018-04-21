@@ -168,6 +168,10 @@ function init() {
     balls.push(sphere);
   }
 
+  let dir = new THREE.Vector3([0, 0, 0]);
+  let origin = new THREE.Vector3([1, 1, 1]);
+  scene.add(new THREE.ArrowHelper(dir, origin, 1, 0xffff00));
+
   //hemisphere light
   //var hemisphereLight = new THREE.HemisphereLight(0xffffff,0xff0000,1);
   //hemisphereLight.position.set(1, 0, 1).normalize();
