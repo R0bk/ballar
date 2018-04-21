@@ -305,9 +305,9 @@ function checkLapFinished() {
   vrDisplay.getFrameData(frameData);
   let currentPos = frameData.pose.position;
   let targetPos = Object.values(track)[Object.values(track).length - 1];
-  if ((currentPos[0]-targetPos[0] < 1 || targetPos[0]-targetPos[0] < 1) &&
-    (currentPos[1]-targetPos[1] < 1 || targetPos[1]-targetPos[1] < 1) &&
-    (currentPos[2]-targetPos[2] < 1 || targetPos[2]-targetPos[2] < 1)) {
+  if ((currentPos[0]-targetPos[0] < 1 || targetPos[0]-currentPos[0] < 1) &&
+    (currentPos[1]-targetPos[1] < 1 || targetPos[1]-currentPos[1] < 1) &&
+    (currentPos[2]-targetPos[2] < 1 || targetPos[2]-currentPos[2] < 1)) {
     console.log('finished lap')
     let finishedTime = Date.now();
 
