@@ -27,7 +27,21 @@
       line-height: 2em;
       text-align: center;
     }
+    #timer {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, 0);
+      margin: 2em;
+      z-index: 10;
+      display: block;
+      line-height: 4em;
+      text-align: center;
+    }
     #info * {
+      color: #fff;
+    }
+    #timer * {
       color: #fff;
     }
     .title {
@@ -38,6 +52,11 @@
     .links {
       background-color: rgba(40, 40, 40, 0.6);
       padding: 0.4em 0.6em;
+      border-radius: 0.1em;
+    }
+    .timerText {
+      background-color: rgba(40, 40, 40, 0.6);
+      padding: 1em 1em;
       border-radius: 0.1em;
     }
     canvas {
@@ -60,11 +79,15 @@
       </a>
     </div>
     <div class="pusher">
+      <div id="timer">
+        <span id="timerText">
+          <label id="minutes">00</label>:<label id="seconds">00</label>
+        </span>
+      </div>
       <div id="info">
         <span class="title">Tap to spawn objects on surfaces.</span>
         <br/>
         <span class="links">
-          <label id="minutes">00</label>:<label id="seconds">00</label>
           <button onClick="startLap()">Start Lap</button>
           <button onClick="pushWaypoint()">waypoint</button>
           <button onClick="sidebar()">Leaderboard</button>
@@ -122,6 +145,7 @@ var numBalls = 0;
 var totalSeconds = 0;
 
 var BOX_SIZE = 0.2;
+var timerInterval;
 
 /**
  * Use the `getARDisplay()` utility to leverage the WebVR API
@@ -307,7 +331,7 @@ function pad(val) {
 
 function startLap() {
   startTime = Date.now();
-  setInterval(setTime, 1000);
+  timerInterval = setInterval(setTime, 1000);
   raceStarted = true;
 
   const ref = firebase.database().ref('laps').push()
@@ -331,18 +355,20 @@ function checkLapFinished() {
   vrDisplay.getFrameData(frameData);
   let currentPos = frameData.pose.position;
   let targetPos = Object.values(track)[Object.values(track).length - 1];
-  if ((currentPos[0]-targetPos[0] < 1 || targetPos[0]-targetPos[0] < 1) &&
-    (currentPos[1]-targetPos[1] < 1 || targetPos[1]-targetPos[1] < 1) &&
-    (currentPos[2]-targetPos[2] < 1 || targetPos[2]-targetPos[2] < 1)) {
+  let from = THREE.Vector3.fromArray(currentPos);
+  let to = THREE.Vector3.fromArray(targetPos);
+  let distance = from.distanceTo(to);
+  console.log(distance);
+  if (distance < 0.5) {
     console.log('finished lap')
     let finishedTime = Date.now();
 
     if (lapUid) {
       firebase.database().ref('laps').child(lapUid).child('finish').set(finishedTime)
+      lapUid = undefined;
+      clearInterval(timerInterval);
     }
-    // Send to max
   }
-
 }
 
 
