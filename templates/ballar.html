@@ -235,9 +235,9 @@ function onWindowResize () {
 }
 
 function update_matrix(hit, x, y, z) {
-    hit.modelMatrix[12] += x;
-    hit.modelMatrix[13] += y;
-    hit.modelMatrix[14] += z;
+    hit.modelMatrix[12] = x;
+    hit.modelMatrix[13] = y;
+    hit.modelMatrix[14] = z;
     return hit;
 }
 
@@ -275,7 +275,7 @@ function onClick (e) {
   console.log(width);
   for (var i = 0; i < width; i++) {
     for (var j = 0; j < width; i++) {
-      position = update_matrix(hit, i * 0.01, 0, j * 0.01);
+      position = update_matrix(hit, i * 0.1, 0, j * 0.1);
       THREE.ARUtils.placeObjectAtHit(balls[i * width + j],  // The object to place
                                      position,   // The VRHit object to move the cube to
                                      1,     // Easing value from 0 to 1; we want to move
