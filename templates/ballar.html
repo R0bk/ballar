@@ -273,9 +273,11 @@ function onClick (e) {
   console.log('just hit son');
   console.log(balls.length);
   for (var i = balls.length - 1; i >= 0; i--) {
+    position = update_matrix(hit, i + 0.1, i + 0.1, 0);
     console.log('currently at number ' + i);
+    console.log(position)
     THREE.ARUtils.placeObjectAtHit(balls[i],  // The object to place
-                                   update_matrix(hit, i + 0.1, i + 0.1, 0),   // The VRHit object to move the cube to
+                                   position,   // The VRHit object to move the cube to
                                    1,     // Easing value from 0 to 1; we want to move
                                           // the cube directly to the hit position
                                    true); // Whether or not we also apply orientation
