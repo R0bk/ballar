@@ -209,12 +209,12 @@ function pushWaypoint() {
   firebase.database().ref('tracks').child(trackUid).push().set(frameData.pose.position)
 }
 
-function pointsCallback(trackSnapshot) {
+function trackCallback(trackSnapshot) {
   if (trackSnapshot) {
     track = trackSnapshot.val()
     console.log('new snapshot', track)
     // Arrow
-    posList = track.values();
+    posList = Object.values(track);
     for (let i = 0; i < posList.length; i++) {
       console.log(posList[i+1])
       console.log(posList[i])
