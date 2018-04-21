@@ -216,9 +216,9 @@ function trackCallback(trackSnapshot) {
     // Arrow
     posList = Object.values(track);
     for (let i = 0; i < posList.length; i++) {
-      console.log(posList[i+1])
+      console.log(posList[(i+1) % posList.length])
       console.log(posList[i])
-      let dir = new THREE.Vector3(posList[i+1]);
+      let dir = new THREE.Vector3(posList[(i+1) % posList.length]);
 
       //normalize the direction vector (convert to vector of length 1)
       dir.normalize();
