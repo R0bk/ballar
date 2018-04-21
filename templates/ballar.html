@@ -79,6 +79,8 @@ var trackUid = 'alpha';
 var track = {};
 var frameData;
 
+var lapUid;
+
 var vrDisplay;
 var vrControls;
 var arView;
@@ -233,7 +235,12 @@ function trackCallback(trackSnapshot) {
 
 function startLap() {
   startTime = Date.now();
-  // Max sends to firebase
+
+  const ref = firebase.database().ref('laps').push()
+
+  lapUid = ref.key
+
+  ref.child('start').set(startTime)
 }
 
 function checkLapFinished() {
@@ -254,6 +261,9 @@ function checkLapFinished() {
     console.log('finished lap')
     let finishedTime = Date.now();
 
+    if (lapUid) {
+      firebase.database().ref('laps').child(lapUid).child('finish').set(finishedTime)
+    }
     // Send to max
   }
 
