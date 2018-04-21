@@ -276,6 +276,8 @@ function setLeaderboard(lapsSnapshot) {
 
     const laps = Object.values(lapsSnapshot.val())
 
+    console.log(laps)
+
     const times = laps.map(x => {
       if (x.finish && x.start) {
         return (x.finish - x.start) / 1000
@@ -283,13 +285,14 @@ function setLeaderboard(lapsSnapshot) {
         return 9999999
       }
     })
+    
+    console.log(times)
 
     times.sort()
 
     document.getElementById("first").innerHTML = times[0]
     document.getElementById("second").innerHTML = times[1]
     document.getElementById("third").innerHTML = times[2]
-
   }
 }
 
