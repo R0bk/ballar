@@ -328,8 +328,8 @@ function checkLapFinished() {
   vrDisplay.getFrameData(frameData);
   let currentPos = frameData.pose.position;
   let targetPos = Object.values(track)[Object.values(track).length - 1];
-  let from = new THREE.Vector3.fromArray(currentPos);
-  let to = new THREE.Vector3.fromArray(targetPos);
+  let from = THREE.Vector3.fromArray(currentPos);
+  let to = THREE.Vector3.fromArray(targetPos);
   let distance = from.distanceTo(to);
   console.log(distance);
   if (distance < 0.5) {
