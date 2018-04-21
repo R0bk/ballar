@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>BallAR</title>
+  <title>three.ar.js - Spawn at Surface</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user-scalable=no,
   minimum-scale=1.0, maximum-scale=1.0">
@@ -89,7 +89,7 @@ var BALL_SETTINGS = {
   'heightSegments': 4,
   'widthSegments': 4,
 }
-var numBalls = 16;
+var numBalls = 0;
 
 var BOX_SIZE = 0.2;
 
@@ -109,6 +109,7 @@ THREE.ARUtils.getARDisplay().then(function (display) {
 });
 
 function init() {
+  console.log('heyoo mate')
   // Turn on the debugging panel
   var arDebug = new THREE.ARDebug(vrDisplay);
   document.body.appendChild(arDebug.getElement());
@@ -205,12 +206,15 @@ let trackUid
 
 function pushWaypoint() {
 
+  console.log("pushWaypoint trigger")
 
   if (!trackUid) {
     trackUid = firebase.database().ref('tracks').push().key
   }
 
-  firebase.database().ref('tracks').child(trackUid).push(scene.config.showPoseStatus)
+  console.log("trackUid", trackUid)
+
+  firebase.database().ref('tracks').child(trackUid).push(scene.showPoseStatus)
 }
 
 /**
