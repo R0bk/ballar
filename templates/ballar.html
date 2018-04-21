@@ -170,6 +170,7 @@ function init() {
   }
 
   let dir = new THREE.Vector3([1, 1, 1]);
+  dir.normalize();
   let origin = new THREE.Vector3([0, 0, 0]);
   scene.add(new THREE.ArrowHelper(dir, origin, 1, 0xffff00));
 
