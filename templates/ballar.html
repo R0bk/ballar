@@ -314,9 +314,9 @@ function setLeaderboard(lapsSnapshot) {
     
     times = times.sort(sortNumber)
 
-    document.getElementById("first").innerHTML = "Max: " + times[0]
-    document.getElementById("second").innerHTML = "Max: " + times[1]
-    document.getElementById("third").innerHTML = "Rob: " + times[2]
+    document.getElementById("first").innerHTML = times[0]
+    document.getElementById("second").innerHTML = times[1]
+    document.getElementById("third").innerHTML = times[2]
   }
 }
 
