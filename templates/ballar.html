@@ -79,18 +79,6 @@ var BALL_SETTINGS = {
 }
 var numBalls = 0;
 
-
-var colors = [
-  new THREE.Color( 0xffffff ),
-  new THREE.Color( 0xffff00 ),
-  new THREE.Color( 0xff00ff ),
-  new THREE.Color( 0xff0000 ),
-  new THREE.Color( 0x00ffff ),
-  new THREE.Color( 0x00ff00 ),
-  new THREE.Color( 0x0000ff ),
-  new THREE.Color( 0x000000 )
-];
-
 var BOX_SIZE = 0.2;
 
 /**
@@ -152,22 +140,12 @@ function init() {
   for (var i = 0; i < numBalls; i++) {
     var geometry = new THREE.SphereGeometry(BALL_SETTINGS.size, BALL_SETTINGS.heightSegments, BALL_SETTINGS.widthSegments);
 
-    //var faceIndices = ['a', 'b', 'c'];
-    //for (var i = 0; i < geometry.faces.length; i++) {
-    //  var f  = geometry.faces[i];
-    //  for (var j = 0; j < 3; j++) {
-    //    var vertexIndex = f[faceIndices[ j ]];
-    //    f.vertexColors[j] = colors[vertexIndex];
-    //  }
-    //}
-
     // Shift the cube geometry vertices upwards, so that the "pivot" of
     // the cube is at it's base. When the cube is added to the scene,
     // this will help make it appear to be sitting on top of the real-
     // world surface.
     // geometry.applyMatrix( new THREE.Matrix4().setTranslation( 0, BOX_SIZE / 2, 0 ) );
     geometry.translate( 0, BALL_SETTINGS.size / 2, 0 );
-    //var material = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors });
     var material = new THREE.MeshPhongMaterial( {color: 0xffff00} );
     sphere = new THREE.Mesh(geometry, material);
 
