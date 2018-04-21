@@ -226,7 +226,7 @@ function trackCallback(trackSnapshot) {
       let from = new THREE.Vector3(...posList[i]);
       let to = new THREE.Vector3(...posList[(i+1) % posList.length]);
       let length = from.distanceTo(to);
-      let hex = getRandomColor();
+      let hex = 0xee00ee
       var dir = new THREE.Vector3();
       dir.subVectors(to,from).normalize();
       let arrowHelper = new THREE.ArrowHelper(dir, from, length, hex);
