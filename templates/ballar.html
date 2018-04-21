@@ -231,7 +231,7 @@ function startLap() {
   // Max sends to firebase
 }
 
-checkLapFinished() {
+function checkLapFinished() {
 
   console.log("check lap finished")
   if (!raceStarted || Date.now() - startTime < 5000) {return false}
