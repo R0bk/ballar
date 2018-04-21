@@ -77,7 +77,7 @@ var BALL_SETTINGS = {
   'heightSegments': 16,
   'widthSegments': 16,
 }
-var numBalls = 100;
+var numBalls = 1000;
 
 
 var colors = [
@@ -274,7 +274,7 @@ function onClick (e) {
   width = parseInt(Math.sqrt(balls.length));
   console.log(width);
   for (var i = 0; i < width; i++) {
-    for (var j = 0; j < width; i++) {
+    for (var j = 0; j < width; j++) {
       position = update_matrix(hit, i * 0.1, 0, j * 0.1);
       THREE.ARUtils.placeObjectAtHit(balls[i * width + j],  // The object to place
                                      position,   // The VRHit object to move the cube to
