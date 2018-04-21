@@ -141,7 +141,7 @@ THREE.ARUtils.getARDisplay().then(function (display) {
 function sidebar() {
  $('.ui.sidebar')
     .sidebar('toggle')
-    ; 
+    ;
 }
 
 function init() {
@@ -247,7 +247,7 @@ function trackCallback(trackSnapshot) {
       let hex = 0xffff00;
       var dir = new THREE.Vector3();
       dir.subVectors(to,from).normalize();
-      let arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
+      let arrowHelper = new THREE.ArrowHelper(dir, from, length, hex);
       arrows.push(arrowHelper);
       scene.add(arrowHelper);
     }
