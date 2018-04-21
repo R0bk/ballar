@@ -149,7 +149,7 @@ function init() {
   // until the first hit is found, and move it there
   for (var i = 0; i < numBalls; i++) {
     var geometry = new THREE.SphereGeometry(BALL_SETTINGS.size, BALL_SETTINGS.heightSegments, BALL_SETTINGS.widthSegments);
-    
+
     //var faceIndices = ['a', 'b', 'c'];
     //for (var i = 0; i < geometry.faces.length; i++) {
     //  var f  = geometry.faces[i];
@@ -256,6 +256,7 @@ function onClick (e) {
   // If a hit is found, just use the first one
   if (hits && hits.length) {
     var hit = hits[0];
+    console.log('rob sux');
     // Use the `placeObjectAtHit` utility to position
     // the cube where the hit occurred
     console.log(hit)
